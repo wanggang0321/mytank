@@ -1,6 +1,7 @@
 package com.mashibing.tank;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Bullet {
 	
@@ -65,6 +66,46 @@ public class Bullet {
 		
 		if(x<0 || y<0 || x>tf.GAME_WIDTH || y>tf.GAME_HEIGHT) living = false;
 		
+	}
+	
+	public void collideWith(Tank tank) {
+		
+		int width = 0;
+		int height = 0;
+		
+		switch(dir) {
+		case UP :
+			width = ResourceMgr.bU.getWidth();
+			height = ResourceMgr.bU.getHeight();
+			break;
+		case DOWN :
+			width = ResourceMgr.bD.getWidth();
+			height = ResourceMgr.bD.getHeight();
+			break;
+		case LEFT :
+			width = ResourceMgr.bL.getWidth();
+			height = ResourceMgr.bL.getHeight();
+			break;
+		case RIGHT :
+			width = ResourceMgr.bR.getWidth();
+			height = ResourceMgr.bR.getHeight();
+			break;
+		
+		default :
+			break;
+		}
+		
+		Rectangle rect1 = new Rectangle(this.x, this.y, width, height);
+		Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
+		if(rect1.intersects(rect2)) {
+			tank.die();
+			this.die();
+		}
+
+	}
+
+	private void die() {
+		this.living = false;
 	}
 
 	public boolean isLiving() {

@@ -68,6 +68,12 @@ public class TankFrame extends Frame {
 		for(int i=0;i<bullets.size();i++) {
 			bullets.get(i).paint(g);
 		}
+		
+		for(int m=0;m<bullets.size();m++) {
+			for(int n=0;n<enemys.size();n++)
+				bullets.get(m).collideWith(enemys.get(n));
+		}
+		
 	}
 	
 	class MyKeyListener extends KeyAdapter {

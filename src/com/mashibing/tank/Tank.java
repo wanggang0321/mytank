@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Tank {
 	
+	public static int WIDTH = 50, HEIGHT = 50;
 	private int x, y;
 	private Dir dir;
 	private final int SPEED = 5;
@@ -21,6 +22,8 @@ public class Tank {
 	}
 	
 	public void paint(Graphics g) {
+		
+		if(!living) tf.enemys.remove(this);
 		
 		switch(dir) {
 		case UP :
@@ -144,6 +147,26 @@ public class Tank {
 
 	public void setLiving(boolean living) {
 		this.living = living;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public void die() {
+		this.living = false;
 	}
 	
 }
