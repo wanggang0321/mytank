@@ -6,7 +6,9 @@ public class Main {
 		
 		TankFrame tf = new TankFrame();
 		
-		for(int i=0;i<5;i++) {
+		int tankCount = Integer.parseInt((String) PropertyMgr.getValue("initTankCount"));
+		
+		for(int i=0;i<tankCount;i++) {
 			Tank t = new Tank(235 + i*70, 150, Dir.DOWN, Group.BAD, tf);
 			tf.enemys.add(t);
 		}
