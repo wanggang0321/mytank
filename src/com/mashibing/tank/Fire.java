@@ -21,7 +21,6 @@ public class Fire {
 		
 		if(step>=ResourceMgr.fire.length)
 			tf.fires.remove(this);
-			
 	}
 
 }

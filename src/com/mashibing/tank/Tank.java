@@ -75,6 +75,9 @@ public class Tank {
 		if(this.group == Group.BAD && random.nextInt(200)>195)
 			randomDir();
 		
+		if(this.group == Group.GOOD)
+			new Thread(()->new Audio("audio/tank_move.wav").play()).start();
+		
 		boundaryCheck();
 	}
 	
@@ -99,6 +102,9 @@ public class Tank {
 		
 		Fire e = new Fire(fireX, fireY, tf);
 		tf.fires.add(e);
+
+		if(this.group == Group.GOOD)
+			new Thread(()->new Audio("audio/fire1.wav").play()).start();
 		
 		Bullet b = new Bullet(bulletX, bulletY, dir, this.group, tf);
 		tf.bullets.add(b);

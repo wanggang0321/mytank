@@ -22,6 +22,7 @@ public class Explode {
 		if(step>=ResourceMgr.explode.length)
 			tf.explodes.remove(this);
 			
+		new Thread(()->new Audio("audio/explode.wav").play()).start();
 	}
 
 }
