@@ -1,6 +1,7 @@
 package com.mashibing.tank;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.Random;
 
 public class Tank {
@@ -14,6 +15,7 @@ public class Tank {
 	private boolean living = true;
 	private Group group;
 	Random random = new Random();
+	public Rectangle rect = new Rectangle(WIDTH, HEIGHT);
 	
 	public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
 		this.x = x;
@@ -21,6 +23,9 @@ public class Tank {
 		this.dir = dir;
 		this.group = group;
 		this.tf = tf;
+		
+		rect.x = this.x;
+		rect.y = this.y;
 	}
 	
 	public void paint(Graphics g) {
@@ -79,6 +84,9 @@ public class Tank {
 			new Thread(()->new Audio("audio/tank_move.wav").play()).start();
 		
 		boundaryCheck();
+		
+		rect.x = this.x;
+		rect.y = this.y;
 	}
 	
 	private void boundaryCheck() {

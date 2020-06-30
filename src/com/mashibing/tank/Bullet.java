@@ -11,6 +11,7 @@ public class Bullet {
 	private TankFrame tf = null;
 	private boolean living = true;
 	private Group group;
+	private Rectangle rect = null;
 	
 	public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
 		super();
@@ -19,6 +20,36 @@ public class Bullet {
 		this.dir = dir;
 		this.group = group;
 		this.tf = tf;
+		
+		int width = 0;
+		int height = 0;
+		
+		switch(dir) {
+		case UP :
+			width = ResourceMgr.bU.getWidth();
+			height = ResourceMgr.bU.getHeight();
+			break;
+		case DOWN :
+			width = ResourceMgr.bD.getWidth();
+			height = ResourceMgr.bD.getHeight();
+			break;
+		case LEFT :
+			width = ResourceMgr.bL.getWidth();
+			height = ResourceMgr.bL.getHeight();
+			break;
+		case RIGHT :
+			width = ResourceMgr.bR.getWidth();
+			height = ResourceMgr.bR.getHeight();
+			break;
+		
+		default :
+			break;
+		}
+		
+		rect = new Rectangle(width, height);
+		
+		rect.x = this.x;
+		rect.y = this.y;
 	}
 	
 	public void paint(Graphics g) {
@@ -66,6 +97,9 @@ public class Bullet {
 			break;
 		}
 		
+		rect.x = this.x;
+		rect.y = this.y;
+		
 		if(x<0 || y<0 || x>tf.GAME_WIDTH || y>tf.GAME_HEIGHT) living = false;
 		
 	}
@@ -74,34 +108,7 @@ public class Bullet {
 		
 		if(this.group == tank.getGroup()) return;
 		
-		int width = 0;
-		int height = 0;
-		
-		switch(dir) {
-		case UP :
-			width = ResourceMgr.bU.getWidth();
-			height = ResourceMgr.bU.getHeight();
-			break;
-		case DOWN :
-			width = ResourceMgr.bD.getWidth();
-			height = ResourceMgr.bD.getHeight();
-			break;
-		case LEFT :
-			width = ResourceMgr.bL.getWidth();
-			height = ResourceMgr.bL.getHeight();
-			break;
-		case RIGHT :
-			width = ResourceMgr.bR.getWidth();
-			height = ResourceMgr.bR.getHeight();
-			break;
-		
-		default :
-			break;
-		}
-		
-		Rectangle rect1 = new Rectangle(this.x, this.y, width, height);
-		Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
-		if(rect1.intersects(rect2)) {
+		if(rect.intersects(tank.rect)) {
 			
 			tank.die();
 			this.die();
