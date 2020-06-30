@@ -10,12 +10,15 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class TankFrame extends Frame {
 	
-	private Tank myTank = new Tank(375, 500, Dir.UP, this);
+	private Tank myTank = new Tank(375, 500, Dir.UP, Group.GOOD, this);
 	public List<Tank> enemys = new ArrayList<Tank>();
 	public List<Bullet> bullets = new ArrayList<Bullet>();
+	public List<Fire> fires = new ArrayList<Fire>();
+	public List<Explode> explodes = new ArrayList<Explode>();
 	static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 	
 	public TankFrame() {
@@ -35,6 +38,7 @@ public class TankFrame extends Frame {
 		addKeyListener(new MyKeyListener());
 	}
 	
+	//消除闪烁
 	Image offScreenImage = null;
 	@Override
 	public void update(Graphics g) {
@@ -57,12 +61,22 @@ public class TankFrame extends Frame {
 		g.setColor(Color.WHITE);
 		g.drawString("敌人的数量：" + enemys.size(), 10, 40);
 		g.drawString("子弹的数量：" + bullets.size(), 10, 60);
+		g.drawString("开火的数量：" + fires.size(), 10, 80);
+		g.drawString("爆炸的数量：" + explodes.size(), 10, 100);
 		g.setColor(c);
 		
 		myTank.paint(g);
 		
 		for(int i=0;i<enemys.size();i++) {
 			enemys.get(i).paint(g);
+		}
+		
+		for(int i=0;i<fires.size();i++) {
+			fires.get(i).paint(g);
+		}
+		
+		for(int i=0;i<explodes.size();i++) {
+			explodes.get(i).paint(g);
 		}
 		
 		for(int i=0;i<bullets.size();i++) {
@@ -100,7 +114,7 @@ public class TankFrame extends Frame {
 				bR = true;
 				break;
 			case KeyEvent.VK_SPACE :
-				myTank.fire(bullets);
+				myTank.fire();
 				break;
 			default :
 				break;

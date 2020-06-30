@@ -10,12 +10,14 @@ public class Bullet {
 	private final int SPEED = 10;
 	private TankFrame tf = null;
 	private boolean living = true;
+	private Group group;
 	
-	public Bullet(int x, int y, Dir dir, TankFrame tf) {
+	public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
+		this.group = group;
 		this.tf = tf;
 	}
 	
@@ -70,6 +72,8 @@ public class Bullet {
 	
 	public void collideWith(Tank tank) {
 		
+		if(this.group == tank.getGroup()) return;
+		
 		int width = 0;
 		int height = 0;
 		
@@ -98,8 +102,13 @@ public class Bullet {
 		Rectangle rect1 = new Rectangle(this.x, this.y, width, height);
 		Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
 		if(rect1.intersects(rect2)) {
+			
 			tank.die();
 			this.die();
+			
+			int explodeX = tank.getX() + ResourceMgr.badTankU.getWidth()/2 - ResourceMgr.explode[0].getWidth()/2;
+			int explodeY = tank.getY() + ResourceMgr.badTankU.getHeight()/2 - ResourceMgr.explode[0].getHeight()/2;
+			tf.explodes.add(new Explode(explodeX, explodeY, tf));
 		}
 
 	}
@@ -114,6 +123,14 @@ public class Bullet {
 
 	public void setLiving(boolean living) {
 		this.living = living;
+	}
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 	
 }

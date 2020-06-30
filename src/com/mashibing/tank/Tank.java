@@ -1,7 +1,7 @@
 package com.mashibing.tank;
 
 import java.awt.Graphics;
-import java.util.List;
+import java.util.Random;
 
 public class Tank {
 	
@@ -9,15 +9,17 @@ public class Tank {
 	private int x, y;
 	private Dir dir;
 	private final int SPEED = 5;
-	private boolean moving = false;
+	private boolean moving = true;
 	private TankFrame tf;
 	private boolean living = true;
-	private boolean ismine = true;
+	private Group group;
+	Random random = new Random();
 	
-	public Tank(int x, int y, Dir dir, TankFrame tf) {
+	public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
+		this.group = group;
 		this.tf = tf;
 	}
 	
@@ -27,16 +29,16 @@ public class Tank {
 		
 		switch(dir) {
 		case UP :
-			g.drawImage(ResourceMgr.tankU, x, y, null);
+			g.drawImage(this.group==Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
 			break;
 		case DOWN :
-			g.drawImage(ResourceMgr.tankD, x, y, null);
+			g.drawImage(this.group==Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
 			break;
 		case LEFT :
-			g.drawImage(ResourceMgr.tankL, x, y, null);
+			g.drawImage(this.group==Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
 			break;
 		case RIGHT :
-			g.drawImage(ResourceMgr.tankR, x, y, null);
+			g.drawImage(this.group==Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
 			break;
 			
 		default :
@@ -49,7 +51,7 @@ public class Tank {
 	private void move() {
 
 		if(!moving) return;
-
+		
 		switch(dir) {
 		case UP :
 			y -= SPEED;
@@ -67,14 +69,87 @@ public class Tank {
 		default :
 			break;
 		}
+		
+		if(this.group == Group.BAD && random.nextInt(200)>195)
+			fire();
+		if(this.group == Group.BAD && random.nextInt(200)>195)
+			randomDir();
+		
+		boundaryCheck();
 	}
 	
-	public void fire(List<Bullet> bullets) {
+	private void boundaryCheck() {
+		if(x<2) this.x=2;
+		if(y<27) this.y=27;
+		if(x>(tf.GAME_WIDTH - this.WIDTH - 2)) this.x = tf.GAME_WIDTH - this.WIDTH - 2;
+		if(y>(tf.GAME_HEIGHT - this.HEIGHT - 2)) this.y = tf.GAME_HEIGHT - this.HEIGHT - 2;
+	}
+
+	public void randomDir() {
+		this.dir = Dir.values()[random.nextInt(4)];
+	}
+	
+	public void fire() {
 		
 		int bulletX = getBulletPositionX();
 		int bulletY = getBulletPositionY();
-		Bullet b = new Bullet(bulletX, bulletY, dir, tf);
+		
+		int fireX = getFirePositionX();
+		int fireY = getFirePositionY();
+		
+		Fire e = new Fire(fireX, fireY, tf);
+		tf.fires.add(e);
+		
+		Bullet b = new Bullet(bulletX, bulletY, dir, this.group, tf);
 		tf.bullets.add(b);
+	}
+
+	private int getFirePositionX() {
+
+		int firePositionX = 0;
+		switch(dir) {
+		case UP :
+			firePositionX = this.x + ResourceMgr.goodTankU.getWidth()/2 - ResourceMgr.fire[0].getWidth()/2;
+			break;
+		case DOWN :
+			firePositionX = this.x + ResourceMgr.goodTankD.getWidth()/2 - ResourceMgr.fire[0].getWidth()/2;
+			break;
+		case LEFT :
+			firePositionX = this.x - ResourceMgr.fire[0].getWidth()/2;
+			break;
+		case RIGHT :
+			firePositionX = this.x + ResourceMgr.goodTankD.getWidth() - ResourceMgr.fire[0].getWidth()/2;
+			break;
+		
+		default :
+			break;
+		}
+		
+		return firePositionX;
+	}
+
+	private int getFirePositionY() {
+
+		int firePositionY = 0;
+		switch(dir) {
+		case UP :
+			firePositionY = this.y - ResourceMgr.fire[0].getHeight()/2;
+			break;
+		case DOWN :
+			firePositionY = this.y + ResourceMgr.goodTankD.getHeight() - ResourceMgr.fire[0].getHeight()/2;
+			break;
+		case LEFT :
+			firePositionY = this.y + ResourceMgr.goodTankL.getHeight()/2 - ResourceMgr.fire[0].getHeight()/2;
+			break;
+		case RIGHT :
+			firePositionY = this.y + ResourceMgr.goodTankR.getHeight()/2 - ResourceMgr.fire[0].getHeight()/2;
+			break;
+		
+		default :
+			break;
+		}
+		
+		return firePositionY;
 	}
 
 	private int getBulletPositionY() {
@@ -85,13 +160,13 @@ public class Tank {
 			bulletPositionY = this.y - ResourceMgr.bU.getHeight();
 			break;
 		case DOWN :
-			bulletPositionY = this.y + ResourceMgr.tankD.getHeight();
+			bulletPositionY = this.y + ResourceMgr.goodTankD.getHeight();
 			break;
 		case LEFT :
-			bulletPositionY = this.y + ResourceMgr.tankL.getHeight()/2 - ResourceMgr.bL.getHeight()/2;
+			bulletPositionY = this.y + ResourceMgr.goodTankL.getHeight()/2 - ResourceMgr.bL.getHeight()/2;
 			break;
 		case RIGHT :
-			bulletPositionY = this.y + ResourceMgr.tankR.getHeight()/2 - ResourceMgr.bR.getHeight()/2;
+			bulletPositionY = this.y + ResourceMgr.goodTankR.getHeight()/2 - ResourceMgr.bR.getHeight()/2;
 			break;
 		
 		default :
@@ -106,16 +181,16 @@ public class Tank {
 		int bulletPositionX = 0;
 		switch(dir) {
 		case UP :
-			bulletPositionX = this.x + ResourceMgr.tankU.getWidth()/2 - ResourceMgr.bU.getWidth()/2;
+			bulletPositionX = this.x + ResourceMgr.goodTankU.getWidth()/2 - ResourceMgr.bU.getWidth()/2;
 			break;
 		case DOWN :
-			bulletPositionX = this.x + ResourceMgr.tankD.getWidth()/2 - ResourceMgr.bD.getWidth()/2;
+			bulletPositionX = this.x + ResourceMgr.goodTankD.getWidth()/2 - ResourceMgr.bD.getWidth()/2;
 			break;
 		case LEFT :
 			bulletPositionX = this.x - ResourceMgr.bL.getWidth();
 			break;
 		case RIGHT :
-			bulletPositionX = this.x + ResourceMgr.tankR.getHeight();
+			bulletPositionX = this.x + ResourceMgr.goodTankR.getHeight();
 			break;
 		
 		default :
@@ -167,6 +242,14 @@ public class Tank {
 
 	public void die() {
 		this.living = false;
+	}
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 	
 }
