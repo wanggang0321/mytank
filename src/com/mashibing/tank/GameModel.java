@@ -5,6 +5,9 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mashibing.tank.cor.BulletTankCollider;
+import com.mashibing.tank.cor.TankTankCollider;
+
 public class GameModel {
 	
 	static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
@@ -14,6 +17,9 @@ public class GameModel {
 	//public List<Bullet> bullets = new ArrayList<Bullet>();
 	//public List<Fire> fires = new ArrayList<Fire>();
 	//public List<Explode> explodes = new ArrayList<Explode>();
+	
+	BulletTankCollider collider = new BulletTankCollider();
+	TankTankCollider collider2 = new TankTankCollider();
 	
 	private List<GameObject> objects = new ArrayList<GameObject>();
 	
@@ -44,10 +50,14 @@ public class GameModel {
 			objects.get(i).paint(g);
 		}
 		
-//		for(int m=0;m<bullets.size();m++) {
-//			for(int n=0;n<enemys.size();n++)
-//				bullets.get(m).collideWith(enemys.get(n));
-//		}
+		for(int i=0;i<objects.size();i++) {
+			for(int j=i+1;j<objects.size();j++) {
+				GameObject o1 = objects.get(i);
+				GameObject o2 = objects.get(j);
+				collider.collide(o1, o2);
+				collider2.collide(o1, o2);
+			}
+		}
 	}
 	
 	public void add(GameObject go) {

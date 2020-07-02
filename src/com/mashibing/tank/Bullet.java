@@ -11,7 +11,7 @@ public class Bullet extends GameObject {
 	private boolean living = true;
 	private Group group;
 	private Rectangle rect = null;
-	private GameModel gm;
+	public GameModel gm;
 	
 	public Bullet(int x, int y, Dir dir, Group group, GameModel gm) {
 		super();
@@ -120,7 +120,7 @@ public class Bullet extends GameObject {
 
 	}
 
-	private void die() {
+	public void die() {
 		this.living = false;
 	}
 
@@ -138,6 +138,10 @@ public class Bullet extends GameObject {
 
 	public void setGroup(Group group) {
 		this.group = group;
+	}
+
+	public Rectangle getRect() {
+		return rect;
 	}
 	
 }

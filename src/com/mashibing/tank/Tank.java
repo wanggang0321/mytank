@@ -213,7 +213,11 @@ public class Tank extends GameObject {
 		
 		return bulletPositionX;
 	}
-
+	
+	public void stop() {
+		this.moving = false;
+	}
+	
 	public Dir getDir() {
 		return dir;
 	}
@@ -264,6 +268,10 @@ public class Tank extends GameObject {
 
 	public void setGroup(Group group) {
 		this.group = group;
+	}
+
+	public Rectangle getRect() {
+		return rect;
 	}
 	
 }
