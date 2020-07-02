@@ -8,18 +8,18 @@ public class Bullet {
 	private int x, y;
 	private Dir dir;
 	private final int SPEED = 10;
-	private TankFrame tf = null;
 	private boolean living = true;
 	private Group group;
 	private Rectangle rect = null;
+	private GameModel gm;
 	
-	public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
+	public Bullet(int x, int y, Dir dir, Group group, GameModel gm) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 		this.group = group;
-		this.tf = tf;
+		this.gm = gm;
 		
 		int width = 0;
 		int height = 0;
@@ -54,7 +54,7 @@ public class Bullet {
 	
 	public void paint(Graphics g) {
 		
-		if(!living) tf.bullets.remove(this);
+		if(!living) gm.bullets.remove(this);
 		
 		switch(dir) {
 		case UP :
@@ -100,7 +100,7 @@ public class Bullet {
 		rect.x = this.x;
 		rect.y = this.y;
 		
-		if(x<0 || y<0 || x>tf.GAME_WIDTH || y>tf.GAME_HEIGHT) living = false;
+		if(x<0 || y<0 || x>gm.GAME_WIDTH || y>gm.GAME_HEIGHT) living = false;
 		
 	}
 	
@@ -115,7 +115,7 @@ public class Bullet {
 			
 			int explodeX = tank.getX() + ResourceMgr.badTankU.getWidth()/2 - ResourceMgr.explode[0].getWidth()/2;
 			int explodeY = tank.getY() + ResourceMgr.badTankU.getHeight()/2 - ResourceMgr.explode[0].getHeight()/2;
-			tf.explodes.add(new Explode(explodeX, explodeY, tf));
+			gm.explodes.add(new Explode(explodeX, explodeY, gm));
 		}
 
 	}

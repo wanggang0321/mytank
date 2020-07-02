@@ -5,14 +5,13 @@ import java.awt.Graphics;
 public class Explode {
 	
 	private int x, y;
-	private TankFrame tf;
-	
+	private GameModel gm;
 	private int step = 0;
 	
-	public Explode(int x, int y, TankFrame tf) {
+	public Explode(int x, int y, GameModel gm) {
 		this.x = x;
 		this.y = y;
-		this.tf = tf;
+		this.gm = gm;
 	}
 	
 	public void paint(Graphics g) {
@@ -20,7 +19,7 @@ public class Explode {
 		g.drawImage(ResourceMgr.explode[step++], x, y, null);
 		
 		if(step>=ResourceMgr.explode.length)
-			tf.explodes.remove(this);
+			gm.explodes.remove(this);
 			
 		new Thread(()->new Audio("audio/explode.wav").play()).start();
 	}

@@ -5,14 +5,14 @@ import java.awt.Graphics;
 public class Fire {
 	
 	private int x, y;
-	private TankFrame tf;
+	private GameModel gm;
 	
 	private int step = 0;
 	
-	public Fire(int x, int y, TankFrame tf) {
+	public Fire(int x, int y, GameModel gm) {
 		this.x = x;
 		this.y = y;
-		this.tf = tf;
+		this.gm = gm;
 	}
 	
 	public void paint(Graphics g) {
@@ -20,7 +20,7 @@ public class Fire {
 		g.drawImage(ResourceMgr.fire[step++], x, y, null);
 		
 		if(step>=ResourceMgr.fire.length)
-			tf.fires.remove(this);
+			gm.fires.remove(this);
 	}
 
 }

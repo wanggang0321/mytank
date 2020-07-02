@@ -8,22 +8,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class TankFrame extends Frame {
 	
-	private Tank myTank = new Tank(375, 500, Dir.UP, Group.GOOD, this);
-	public List<Tank> enemys = new ArrayList<Tank>();
-	public List<Bullet> bullets = new ArrayList<Bullet>();
-	public List<Fire> fires = new ArrayList<Fire>();
-	public List<Explode> explodes = new ArrayList<Explode>();
-	static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
+	private GameModel gm = new GameModel();
 	
 	public TankFrame() {
 		
-		setSize(GAME_WIDTH, GAME_HEIGHT);
+		setSize(gm.GAME_WIDTH, gm.GAME_HEIGHT);
 		setResizable(false);
 		setTitle("tank war");
 		setVisible(true);
@@ -43,12 +35,12 @@ public class TankFrame extends Frame {
 	@Override
 	public void update(Graphics g) {
 		if(offScreenImage == null) {
-			offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+			offScreenImage = this.createImage(gm.GAME_WIDTH, gm.GAME_HEIGHT);
 		}
 		Graphics gOffScreen = offScreenImage.getGraphics();
 		Color c = gOffScreen.getColor();
 		gOffScreen.setColor(Color.BLACK);
-		gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+		gOffScreen.fillRect(0, 0, gm.GAME_WIDTH, gm.GAME_HEIGHT);
 		gOffScreen.setColor(c);
 		paint(gOffScreen);
 		g.drawImage(offScreenImage, 0, 0, null);
@@ -57,37 +49,7 @@ public class TankFrame extends Frame {
 	@Override
 	public void paint(Graphics g) {
 		
-		Color c = g.getColor();
-		g.setColor(Color.WHITE);
-		g.drawString("敌人的数量：" + enemys.size(), 10, 40);
-		g.drawString("子弹的数量：" + bullets.size(), 10, 60);
-		g.drawString("开火的数量：" + fires.size(), 10, 80);
-		g.drawString("爆炸的数量：" + explodes.size(), 10, 100);
-		g.setColor(c);
-		
-		myTank.paint(g);
-		
-		for(int i=0;i<enemys.size();i++) {
-			enemys.get(i).paint(g);
-		}
-		
-		for(int i=0;i<fires.size();i++) {
-			fires.get(i).paint(g);
-		}
-		
-		for(int i=0;i<explodes.size();i++) {
-			explodes.get(i).paint(g);
-		}
-		
-		for(int i=0;i<bullets.size();i++) {
-			bullets.get(i).paint(g);
-		}
-		
-		for(int m=0;m<bullets.size();m++) {
-			for(int n=0;n<enemys.size();n++)
-				bullets.get(m).collideWith(enemys.get(n));
-		}
-		
+		gm.paint(g);
 	}
 	
 	class MyKeyListener extends KeyAdapter {
@@ -114,7 +76,7 @@ public class TankFrame extends Frame {
 				bR = true;
 				break;
 			case KeyEvent.VK_SPACE :
-				myTank.fire();
+				gm.getMyTank().fire();
 				break;
 			default :
 				break;
@@ -147,6 +109,8 @@ public class TankFrame extends Frame {
 		}
 		
 		public void setMainTankDir() {
+			
+			Tank myTank = gm.getMyTank();
 			
 			if(!bL && !bR && !bU && !bD) {
 				myTank.setMoving(false);
