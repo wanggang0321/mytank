@@ -3,7 +3,9 @@ package com.mashibing.tank;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-public class Bullet {
+import com.mashibing.tank.abstractfactory.BaseBullet;
+
+public class Bullet extends BaseBullet {
 	
 	private int x, y;
 	private Dir dir;

@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.mashibing.tank.abstractfactory.DefaultFactory;
+
 public class TankFrame extends Frame {
 	
 	private Tank myTank = new Tank(375, 500, Dir.UP, Group.GOOD, this);
@@ -20,6 +22,8 @@ public class TankFrame extends Frame {
 	public List<Fire> fires = new ArrayList<Fire>();
 	public List<Explode> explodes = new ArrayList<Explode>();
 	static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
+	
+	DefaultFactory df = new DefaultFactory();
 	
 	public TankFrame() {
 		

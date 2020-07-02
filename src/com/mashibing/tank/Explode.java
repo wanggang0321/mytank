@@ -2,7 +2,9 @@ package com.mashibing.tank;
 
 import java.awt.Graphics;
 
-public class Explode {
+import com.mashibing.tank.abstractfactory.BaseExplode;
+
+public class Explode extends BaseExplode {
 	
 	private int x, y;
 	private TankFrame tf;

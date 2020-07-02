@@ -4,7 +4,9 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
 
-public class Tank {
+import com.mashibing.tank.abstractfactory.BaseTank;
+
+public class Tank extends BaseTank {
 	
 	public static int WIDTH = 50, HEIGHT = 50;
 	private int x, y;
@@ -114,7 +116,8 @@ public class Tank {
 		if(this.group == Group.GOOD)
 			new Thread(()->new Audio("audio/fire1.wav").play()).start();
 		
-		Bullet b = new Bullet(bulletX, bulletY, dir, this.group, tf);
+		Bullet b = tf.df.createBullet(bulletX, bulletY, dir, this.group, tf);
+		//Bullet b = new Bullet(bulletX, bulletY, dir, this.group, tf);
 		tf.bullets.add(b);
 	}
 
