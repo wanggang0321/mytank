@@ -5,7 +5,9 @@ import java.util.Properties;
 
 public class PropertyMgr {
 	
-	static Properties prop = new Properties();
+	private static Properties prop = new Properties();
+	
+	private PropertyMgr() {}
 	
 	static {
 		try {
