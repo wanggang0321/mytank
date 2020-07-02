@@ -2,7 +2,7 @@ package com.mashibing.tank;
 
 import java.awt.Graphics;
 
-public class Explode {
+public class Explode extends GameObject {
 	
 	private int x, y;
 	private GameModel gm;
@@ -19,7 +19,7 @@ public class Explode {
 		g.drawImage(ResourceMgr.explode[step++], x, y, null);
 		
 		if(step>=ResourceMgr.explode.length)
-			gm.explodes.remove(this);
+			gm.remove(this);
 			
 		new Thread(()->new Audio("audio/explode.wav").play()).start();
 	}

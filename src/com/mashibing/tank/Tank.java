@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
 
-public class Tank {
+public class Tank extends GameObject {
 	
 	public static int WIDTH = 50, HEIGHT = 50;
 	private int x, y;
@@ -30,7 +30,7 @@ public class Tank {
 	
 	public void paint(Graphics g) {
 		
-		if(!living) gm.enemys.remove(this);
+		if(!living) gm.remove(this);
 		
 		switch(dir) {
 		case UP :
@@ -109,13 +109,13 @@ public class Tank {
 		int fireY = getFirePositionY();
 		
 		Fire e = new Fire(fireX, fireY, gm);
-		gm.fires.add(e);
+		gm.add(e);
 
 		if(this.group == Group.GOOD)
 			new Thread(()->new Audio("audio/fire1.wav").play()).start();
 		
 		Bullet b = new Bullet(bulletX, bulletY, dir, this.group, gm);
-		gm.bullets.add(b);
+		gm.add(b);
 	}
 
 	private int getFirePositionX() {

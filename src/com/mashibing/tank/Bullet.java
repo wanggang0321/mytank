@@ -3,7 +3,7 @@ package com.mashibing.tank;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-public class Bullet {
+public class Bullet extends GameObject {
 	
 	private int x, y;
 	private Dir dir;
@@ -54,7 +54,7 @@ public class Bullet {
 	
 	public void paint(Graphics g) {
 		
-		if(!living) gm.bullets.remove(this);
+		if(!living) gm.remove(this);
 		
 		switch(dir) {
 		case UP :
@@ -115,7 +115,7 @@ public class Bullet {
 			
 			int explodeX = tank.getX() + ResourceMgr.badTankU.getWidth()/2 - ResourceMgr.explode[0].getWidth()/2;
 			int explodeY = tank.getY() + ResourceMgr.badTankU.getHeight()/2 - ResourceMgr.explode[0].getHeight()/2;
-			gm.explodes.add(new Explode(explodeX, explodeY, gm));
+			gm.add(new Explode(explodeX, explodeY, gm));
 		}
 
 	}
