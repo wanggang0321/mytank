@@ -12,7 +12,7 @@ public class Explode extends GameObject {
 		this.y = y;
 
 		new Thread(()->new Audio("audio/explode.wav").play()).start();
-		GameModel.newInstance().add(this);
+		GameModel.getInstance().add(this);
 	}
 	
 	public void paint(Graphics g) {
@@ -20,7 +20,7 @@ public class Explode extends GameObject {
 		g.drawImage(ResourceMgr.explode[step++], x, y, null);
 		
 		if(step>=ResourceMgr.explode.length)
-			GameModel.newInstance().remove(this);
+			GameModel.getInstance().remove(this);
 	}
 
 }

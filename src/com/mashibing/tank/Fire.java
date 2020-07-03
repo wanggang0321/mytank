@@ -12,7 +12,7 @@ public class Fire extends GameObject {
 		this.x = x;
 		this.y = y;
 		
-		GameModel.newInstance().add(this);
+		GameModel.getInstance().add(this);
 	}
 	
 	public void paint(Graphics g) {
@@ -20,7 +20,7 @@ public class Fire extends GameObject {
 		g.drawImage(ResourceMgr.fire[step++], x, y, null);
 		
 		if(step>=ResourceMgr.fire.length)
-			GameModel.newInstance().remove(this);
+			GameModel.getInstance().remove(this);
 	}
 
 }

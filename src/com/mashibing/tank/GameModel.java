@@ -11,6 +11,10 @@ public class GameModel {
 	
 	private static final GameModel INSTANCE = new GameModel();
 	
+	static {
+		INSTANCE.init();
+	}
+	
 	static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 	
 	private Tank myTank;
@@ -22,19 +26,22 @@ public class GameModel {
 	
 	private List<GameObject> objects = new ArrayList<GameObject>();
 	
-	public static GameModel newInstance() {
+	public static GameModel getInstance() {
 		return INSTANCE;
 	}
 	
 	private GameModel() {
 		
+	}
+	
+	private void init() {
+
 		myTank = new Tank(375, 500, Dir.UP, Group.GOOD);
-		add(myTank);
 		
 		int tankCount = Integer.parseInt((String) PropertyMgr.getValue("initTankCount"));
 		
 		for(int i=0;i<tankCount;i++) {
-			add(new Tank(235 + i*70, 100, Dir.DOWN, Group.BAD));
+			new Tank(235 + i*70, 100, Dir.DOWN, Group.BAD);
 		}
 		
 		add(new Wall(150, 150, 150, 50));

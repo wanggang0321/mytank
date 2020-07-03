@@ -49,12 +49,12 @@ public class Bullet extends GameObject {
 		rect.x = this.x;
 		rect.y = this.y;
 		
-		GameModel.newInstance().add(this);
+		GameModel.getInstance().add(this);
 	}
 	
 	public void paint(Graphics g) {
 		
-		if(!living) GameModel.newInstance().remove(this);
+		if(!living) GameModel.getInstance().remove(this);
 		
 		switch(dir) {
 		case UP :

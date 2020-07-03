@@ -25,11 +25,13 @@ public class Tank extends GameObject {
 		
 		rect.x = this.x;
 		rect.y = this.y;
+		
+		GameModel.getInstance().add(this);
 	}
 	
 	public void paint(Graphics g) {
 		
-		if(!living) GameModel.newInstance().remove(this);
+		if(!living) GameModel.getInstance().remove(this);
 		
 		switch(dir) {
 		case UP :
@@ -94,8 +96,8 @@ public class Tank extends GameObject {
 	private void boundaryCheck() {
 		if(x<2) this.x=2;
 		if(y<27) this.y=27;
-		if(x>(GameModel.newInstance().GAME_WIDTH - this.WIDTH - 2)) this.x = GameModel.newInstance().GAME_WIDTH - this.WIDTH - 2;
-		if(y>(GameModel.newInstance().GAME_HEIGHT - this.HEIGHT - 2)) this.y = GameModel.newInstance().GAME_HEIGHT - this.HEIGHT - 2;
+		if(x>(GameModel.getInstance().GAME_WIDTH - this.WIDTH - 2)) this.x = GameModel.getInstance().GAME_WIDTH - this.WIDTH - 2;
+		if(y>(GameModel.getInstance().GAME_HEIGHT - this.HEIGHT - 2)) this.y = GameModel.getInstance().GAME_HEIGHT - this.HEIGHT - 2;
 	}
 
 	public void randomDir() {

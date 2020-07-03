@@ -51,7 +51,7 @@ public class TankFrame extends Frame {
 	@Override
 	public void paint(Graphics g) {
 		
-		GameModel.newInstance().paint(g);
+		GameModel.getInstance().paint(g);
 	}
 	
 	class MyKeyListener extends KeyAdapter {
@@ -78,7 +78,7 @@ public class TankFrame extends Frame {
 				bR = true;
 				break;
 			case KeyEvent.VK_SPACE :
-				GameModel.newInstance().getMyTank().fire();
+				GameModel.getInstance().getMyTank().fire();
 				break;
 			default :
 				break;
@@ -112,7 +112,7 @@ public class TankFrame extends Frame {
 		
 		public void setMainTankDir() {
 			
-			Tank myTank = GameModel.newInstance().getMyTank();
+			Tank myTank = GameModel.getInstance().getMyTank();
 			
 			if(!bL && !bR && !bU && !bD) {
 				myTank.setMoving(false);
