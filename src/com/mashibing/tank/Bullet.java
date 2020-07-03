@@ -104,21 +104,21 @@ public class Bullet extends GameObject {
 		
 	}
 	
-	public void collideWith(Tank tank) {
-		
-		if(this.group == tank.getGroup()) return;
-		
-		if(rect.intersects(tank.rect)) {
-			
-			tank.die();
-			this.die();
-			
-			int explodeX = tank.getX() + ResourceMgr.badTankU.getWidth()/2 - ResourceMgr.explode[0].getWidth()/2;
-			int explodeY = tank.getY() + ResourceMgr.badTankU.getHeight()/2 - ResourceMgr.explode[0].getHeight()/2;
-			gm.add(new Explode(explodeX, explodeY, gm));
-		}
-
-	}
+//	public void collideWith(Tank tank) {
+//		
+//		if(this.group == tank.getGroup()) return;
+//		
+//		if(rect.intersects(tank.rect)) {
+//			
+//			tank.die();
+//			this.die();
+//			
+//			int explodeX = tank.getX() + ResourceMgr.badTankU.getWidth()/2 - ResourceMgr.explode[0].getWidth()/2;
+//			int explodeY = tank.getY() + ResourceMgr.badTankU.getHeight()/2 - ResourceMgr.explode[0].getHeight()/2;
+//			gm.add(new Explode(explodeX, explodeY, gm));
+//		}
+//
+//	}
 
 	public void die() {
 		this.living = false;
