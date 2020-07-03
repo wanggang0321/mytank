@@ -28,9 +28,18 @@ public class GameModel {
 		int tankCount = Integer.parseInt((String) PropertyMgr.getValue("initTankCount"));
 		
 		for(int i=0;i<tankCount;i++) {
-			Tank t = new Tank(235 + i*70, 150, Dir.DOWN, Group.BAD, this);
+			Tank t = new Tank(235 + i*70, 100, Dir.DOWN, Group.BAD, this);
 			objects.add(t);
 		}
+		
+		Wall w1 = new Wall(150, 150, 150, 50);
+		Wall w2 = new Wall(400, 150, 150, 50);
+		Wall w3 = new Wall(250, 300, 50, 150);
+		Wall w4 = new Wall(400, 300, 50, 150);
+		objects.add(w1);
+		objects.add(w2);
+		objects.add(w3);
+		objects.add(w4);
 		
 	}
 	
