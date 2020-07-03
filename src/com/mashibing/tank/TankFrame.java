@@ -9,9 +9,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import com.mashibing.tank.abstractfactory.DefaultFactory;
+
 public class TankFrame extends Frame {
 	
 	private GameModel gm = new GameModel();
+	
+	DefaultFactory df = new DefaultFactory();
 	
 	public TankFrame() {
 		
