@@ -8,6 +8,7 @@ public class Tank extends GameObject {
 	
 	public static int WIDTH = 50, HEIGHT = 50;
 	private int x, y;
+	private int oldX, oldY;
 	private Dir dir;
 	private final int SPEED = 5;
 	private boolean moving = true;
@@ -56,6 +57,9 @@ public class Tank extends GameObject {
 	private void move() {
 
 		if(!moving) return;
+		
+		this.oldX = x;
+		this.oldY = y;
 		
 		switch(dir) {
 		case UP :
@@ -212,6 +216,11 @@ public class Tank extends GameObject {
 		}
 		
 		return bulletPositionX;
+	}
+	
+	public void back() {
+		this.x = this.oldX;
+		this.y = this.oldY;
 	}
 	
 	public void stop() {
