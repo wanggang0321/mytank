@@ -6,7 +6,8 @@ public class Fire extends GameObject {
 	
 	private int step = 0;
 	
-	private int x, y;
+	private static int WIDTH = ResourceMgr.fire[0].getWidth();
+	private static int HEIGHT = ResourceMgr.fire[0].getHeight();
 	
 	public Fire(int x, int y) {
 		this.x = x;
@@ -21,6 +22,16 @@ public class Fire extends GameObject {
 		
 		if(step>=ResourceMgr.fire.length)
 			GameModel.getInstance().remove(this);
+	}
+
+	@Override
+	public int getWidth() {
+		return WIDTH;
+	}
+
+	@Override
+	public int getHeight() {
+		return HEIGHT;
 	}
 
 }

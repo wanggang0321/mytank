@@ -5,12 +5,14 @@ import java.awt.Rectangle;
 
 public class Bullet extends GameObject {
 	
-	private int x, y;
 	private Dir dir;
 	private final int SPEED = 10;
 	private boolean living = true;
 	private Group group;
 	private Rectangle rect = null;
+	
+	private static int WIDTH = ResourceMgr.bU.getWidth();
+	private static int HEIGHT = ResourceMgr.bU.getHeight();
 	
 	public Bullet(int x, int y, Dir dir, Group group) {
 		super();
@@ -142,6 +144,16 @@ public class Bullet extends GameObject {
 
 	public Rectangle getRect() {
 		return rect;
+	}
+
+	@Override
+	public int getWidth() {
+		return WIDTH;
+	}
+
+	@Override
+	public int getHeight() {
+		return HEIGHT;
 	}
 	
 }

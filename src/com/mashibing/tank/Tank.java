@@ -4,10 +4,13 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
 
+import com.mashibing.tank.decorator.RectDecorator;
+import com.mashibing.tank.decorator.TailDecorator;
+
 public class Tank extends GameObject {
 	
-	public static int WIDTH = 50, HEIGHT = 50;
-	private int x, y;
+	public static int WIDTH = ResourceMgr.goodTankU.getWidth();
+	private static int HEIGHT = ResourceMgr.goodTankU.getHeight();
 	private int oldX, oldY;
 	private Dir dir;
 	private final int SPEED = 5;
@@ -117,7 +120,9 @@ public class Tank extends GameObject {
 		if(this.group == Group.GOOD)
 			new Thread(()->new Audio("audio/fire1.wav").play()).start();
 		
-		new Bullet(bulletX, bulletY, dir, this.group);
+		GameModel.getInstance().add(
+				new RectDecorator(new TailDecorator(
+						new Bullet(bulletX, bulletY, dir, this.group))));
 	}
 
 	private int getFirePositionX() {
@@ -279,6 +284,16 @@ public class Tank extends GameObject {
 
 	public Rectangle getRect() {
 		return rect;
+	}
+
+	@Override
+	public int getWidth() {
+		return WIDTH;
+	}
+
+	@Override
+	public int getHeight() {
+		return HEIGHT;
 	}
 	
 }
