@@ -10,6 +10,9 @@ public class Explode extends GameObject {
 	public Explode(int x, int y) {
 		this.x = x;
 		this.y = y;
+
+		new Thread(()->new Audio("audio/explode.wav").play()).start();
+		GameModel.newInstance().add(this);
 	}
 	
 	public void paint(Graphics g) {
@@ -18,8 +21,6 @@ public class Explode extends GameObject {
 		
 		if(step>=ResourceMgr.explode.length)
 			GameModel.newInstance().remove(this);
-			
-		new Thread(()->new Audio("audio/explode.wav").play()).start();
 	}
 
 }

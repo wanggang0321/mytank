@@ -110,14 +110,12 @@ public class Tank extends GameObject {
 		int fireX = getFirePositionX();
 		int fireY = getFirePositionY();
 		
-		Fire e = new Fire(fireX, fireY);
-		GameModel.newInstance().add(e);
+		new Fire(fireX, fireY);
 
 		if(this.group == Group.GOOD)
 			new Thread(()->new Audio("audio/fire1.wav").play()).start();
 		
-		Bullet b = new Bullet(bulletX, bulletY, dir, this.group);
-		GameModel.newInstance().add(b);
+		new Bullet(bulletX, bulletY, dir, this.group);
 	}
 
 	private int getFirePositionX() {

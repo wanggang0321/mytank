@@ -11,6 +11,8 @@ public class Fire extends GameObject {
 	public Fire(int x, int y) {
 		this.x = x;
 		this.y = y;
+		
+		GameModel.newInstance().add(this);
 	}
 	
 	public void paint(Graphics g) {

@@ -48,6 +48,8 @@ public class Bullet extends GameObject {
 		
 		rect.x = this.x;
 		rect.y = this.y;
+		
+		GameModel.newInstance().add(this);
 	}
 	
 	public void paint(Graphics g) {

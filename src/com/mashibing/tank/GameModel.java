@@ -13,7 +13,7 @@ public class GameModel {
 	
 	static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 	
-	private Tank myTank = new Tank(375, 500, Dir.UP, Group.GOOD);
+	private Tank myTank;
 	//public List<Tank> enemys = new ArrayList<Tank>();
 	//public List<Bullet> bullets = new ArrayList<Bullet>();
 	//public List<Fire> fires = new ArrayList<Fire>();
@@ -28,11 +28,13 @@ public class GameModel {
 	
 	private GameModel() {
 		
+		myTank = new Tank(375, 500, Dir.UP, Group.GOOD);
+		add(myTank);
+		
 		int tankCount = Integer.parseInt((String) PropertyMgr.getValue("initTankCount"));
 		
 		for(int i=0;i<tankCount;i++) {
-			Tank t = new Tank(235 + i*70, 100, Dir.DOWN, Group.BAD);
-			objects.add(t);
+			add(new Tank(235 + i*70, 100, Dir.DOWN, Group.BAD));
 		}
 		
 		add(new Wall(150, 150, 150, 50));
