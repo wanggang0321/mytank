@@ -4,15 +4,13 @@ import java.awt.Graphics;
 
 public class Fire extends GameObject {
 	
-	private GameModel gm;
 	private int step = 0;
 	
 	private int x, y;
 	
-	public Fire(int x, int y, GameModel gm) {
+	public Fire(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.gm = gm;
 	}
 	
 	public void paint(Graphics g) {
@@ -20,7 +18,7 @@ public class Fire extends GameObject {
 		g.drawImage(ResourceMgr.fire[step++], x, y, null);
 		
 		if(step>=ResourceMgr.fire.length)
-			gm.remove(this);
+			GameModel.newInstance().remove(this);
 	}
 
 }

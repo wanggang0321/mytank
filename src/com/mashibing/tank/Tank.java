@@ -16,14 +16,12 @@ public class Tank extends GameObject {
 	private Group group;
 	Random random = new Random();
 	public Rectangle rect = new Rectangle(WIDTH, HEIGHT);
-	private GameModel gm;
 	
-	public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
+	public Tank(int x, int y, Dir dir, Group group) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 		this.group = group;
-		this.gm = gm;
 		
 		rect.x = this.x;
 		rect.y = this.y;
@@ -31,7 +29,7 @@ public class Tank extends GameObject {
 	
 	public void paint(Graphics g) {
 		
-		if(!living) gm.remove(this);
+		if(!living) GameModel.newInstance().remove(this);
 		
 		switch(dir) {
 		case UP :
@@ -96,8 +94,8 @@ public class Tank extends GameObject {
 	private void boundaryCheck() {
 		if(x<2) this.x=2;
 		if(y<27) this.y=27;
-		if(x>(gm.GAME_WIDTH - this.WIDTH - 2)) this.x = gm.GAME_WIDTH - this.WIDTH - 2;
-		if(y>(gm.GAME_HEIGHT - this.HEIGHT - 2)) this.y = gm.GAME_HEIGHT - this.HEIGHT - 2;
+		if(x>(GameModel.newInstance().GAME_WIDTH - this.WIDTH - 2)) this.x = GameModel.newInstance().GAME_WIDTH - this.WIDTH - 2;
+		if(y>(GameModel.newInstance().GAME_HEIGHT - this.HEIGHT - 2)) this.y = GameModel.newInstance().GAME_HEIGHT - this.HEIGHT - 2;
 	}
 
 	public void randomDir() {
@@ -112,14 +110,14 @@ public class Tank extends GameObject {
 		int fireX = getFirePositionX();
 		int fireY = getFirePositionY();
 		
-		Fire e = new Fire(fireX, fireY, gm);
-		gm.add(e);
+		Fire e = new Fire(fireX, fireY);
+		GameModel.newInstance().add(e);
 
 		if(this.group == Group.GOOD)
 			new Thread(()->new Audio("audio/fire1.wav").play()).start();
 		
-		Bullet b = new Bullet(bulletX, bulletY, dir, this.group, gm);
-		gm.add(b);
+		Bullet b = new Bullet(bulletX, bulletY, dir, this.group);
+		GameModel.newInstance().add(b);
 	}
 
 	private int getFirePositionX() {

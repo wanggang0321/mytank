@@ -13,13 +13,11 @@ import com.mashibing.tank.abstractfactory.DefaultFactory;
 
 public class TankFrame extends Frame {
 	
-	private GameModel gm = new GameModel();
-	
 	DefaultFactory df = new DefaultFactory();
 	
 	public TankFrame() {
 		
-		setSize(gm.GAME_WIDTH, gm.GAME_HEIGHT);
+		setSize(GameModel.GAME_WIDTH, GameModel.GAME_HEIGHT);
 		setResizable(false);
 		setTitle("tank war");
 		setVisible(true);
@@ -39,12 +37,12 @@ public class TankFrame extends Frame {
 	@Override
 	public void update(Graphics g) {
 		if(offScreenImage == null) {
-			offScreenImage = this.createImage(gm.GAME_WIDTH, gm.GAME_HEIGHT);
+			offScreenImage = this.createImage(GameModel.GAME_WIDTH, GameModel.GAME_HEIGHT);
 		}
 		Graphics gOffScreen = offScreenImage.getGraphics();
 		Color c = gOffScreen.getColor();
 		gOffScreen.setColor(Color.BLACK);
-		gOffScreen.fillRect(0, 0, gm.GAME_WIDTH, gm.GAME_HEIGHT);
+		gOffScreen.fillRect(0, 0, GameModel.GAME_WIDTH, GameModel.GAME_HEIGHT);
 		gOffScreen.setColor(c);
 		paint(gOffScreen);
 		g.drawImage(offScreenImage, 0, 0, null);
@@ -53,7 +51,7 @@ public class TankFrame extends Frame {
 	@Override
 	public void paint(Graphics g) {
 		
-		gm.paint(g);
+		GameModel.newInstance().paint(g);
 	}
 	
 	class MyKeyListener extends KeyAdapter {
@@ -80,7 +78,7 @@ public class TankFrame extends Frame {
 				bR = true;
 				break;
 			case KeyEvent.VK_SPACE :
-				gm.getMyTank().fire();
+				GameModel.newInstance().getMyTank().fire();
 				break;
 			default :
 				break;
@@ -114,7 +112,7 @@ public class TankFrame extends Frame {
 		
 		public void setMainTankDir() {
 			
-			Tank myTank = gm.getMyTank();
+			Tank myTank = GameModel.newInstance().getMyTank();
 			
 			if(!bL && !bR && !bU && !bD) {
 				myTank.setMoving(false);

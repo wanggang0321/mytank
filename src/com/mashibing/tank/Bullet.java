@@ -11,15 +11,13 @@ public class Bullet extends GameObject {
 	private boolean living = true;
 	private Group group;
 	private Rectangle rect = null;
-	public GameModel gm;
 	
-	public Bullet(int x, int y, Dir dir, Group group, GameModel gm) {
+	public Bullet(int x, int y, Dir dir, Group group) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 		this.group = group;
-		this.gm = gm;
 		
 		int width = 0;
 		int height = 0;
@@ -54,7 +52,7 @@ public class Bullet extends GameObject {
 	
 	public void paint(Graphics g) {
 		
-		if(!living) gm.remove(this);
+		if(!living) GameModel.newInstance().remove(this);
 		
 		switch(dir) {
 		case UP :
@@ -100,7 +98,7 @@ public class Bullet extends GameObject {
 		rect.x = this.x;
 		rect.y = this.y;
 		
-		if(x<0 || y<0 || x>gm.GAME_WIDTH || y>gm.GAME_HEIGHT) living = false;
+		if(x<0 || y<0 || x>GameModel.GAME_WIDTH || y>GameModel.GAME_HEIGHT) living = false;
 		
 	}
 	

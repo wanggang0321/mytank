@@ -5,17 +5,15 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mashibing.tank.cor.BulletTankCollider;
-import com.mashibing.tank.cor.BulletWallCollider;
-import com.mashibing.tank.cor.Collider;
 import com.mashibing.tank.cor.ColliderChain;
-import com.mashibing.tank.cor.TankTankCollider;
 
 public class GameModel {
 	
+	private static final GameModel INSTANCE = new GameModel();
+	
 	static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 	
-	private Tank myTank = new Tank(375, 500, Dir.UP, Group.GOOD, this);
+	private Tank myTank = new Tank(375, 500, Dir.UP, Group.GOOD);
 	//public List<Tank> enemys = new ArrayList<Tank>();
 	//public List<Bullet> bullets = new ArrayList<Bullet>();
 	//public List<Fire> fires = new ArrayList<Fire>();
@@ -24,12 +22,16 @@ public class GameModel {
 	
 	private List<GameObject> objects = new ArrayList<GameObject>();
 	
-	public GameModel() {
+	public static GameModel newInstance() {
+		return INSTANCE;
+	}
+	
+	private GameModel() {
 		
 		int tankCount = Integer.parseInt((String) PropertyMgr.getValue("initTankCount"));
 		
 		for(int i=0;i<tankCount;i++) {
-			Tank t = new Tank(235 + i*70, 100, Dir.DOWN, Group.BAD, this);
+			Tank t = new Tank(235 + i*70, 100, Dir.DOWN, Group.BAD);
 			objects.add(t);
 		}
 		

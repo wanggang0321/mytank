@@ -2,6 +2,7 @@ package com.mashibing.tank.cor;
 
 import com.mashibing.tank.Bullet;
 import com.mashibing.tank.Explode;
+import com.mashibing.tank.GameModel;
 import com.mashibing.tank.GameObject;
 import com.mashibing.tank.ResourceMgr;
 import com.mashibing.tank.Tank;
@@ -23,7 +24,7 @@ public class BulletTankCollider implements Collider {
 				
 				int explodeX = t.getX() + ResourceMgr.badTankU.getWidth()/2 - ResourceMgr.explode[0].getWidth()/2;
 				int explodeY = t.getY() + ResourceMgr.badTankU.getHeight()/2 - ResourceMgr.explode[0].getHeight()/2;
-				b.gm.add(new Explode(explodeX, explodeY, b.gm));
+				GameModel.newInstance().add(new Explode(explodeX, explodeY));
 				
 				return false;
 			}
