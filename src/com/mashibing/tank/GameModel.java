@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mashibing.tank.cor.BulletTankCollider;
+import com.mashibing.tank.cor.BulletWallCollider;
+import com.mashibing.tank.cor.Collider;
+import com.mashibing.tank.cor.ColliderChain;
 import com.mashibing.tank.cor.TankTankCollider;
 
 public class GameModel {
@@ -17,9 +20,7 @@ public class GameModel {
 	//public List<Bullet> bullets = new ArrayList<Bullet>();
 	//public List<Fire> fires = new ArrayList<Fire>();
 	//public List<Explode> explodes = new ArrayList<Explode>();
-	
-	BulletTankCollider collider = new BulletTankCollider();
-	TankTankCollider collider2 = new TankTankCollider();
+	ColliderChain chain = new ColliderChain();
 	
 	private List<GameObject> objects = new ArrayList<GameObject>();
 	
@@ -32,15 +33,10 @@ public class GameModel {
 			objects.add(t);
 		}
 		
-		Wall w1 = new Wall(150, 150, 150, 50);
-		Wall w2 = new Wall(400, 150, 150, 50);
-		Wall w3 = new Wall(250, 300, 50, 150);
-		Wall w4 = new Wall(400, 300, 50, 150);
-		objects.add(w1);
-		objects.add(w2);
-		objects.add(w3);
-		objects.add(w4);
-		
+		add(new Wall(150, 150, 150, 50));
+		add(new Wall(400, 150, 150, 50));
+		add(new Wall(250, 300, 50, 150));
+		add(new Wall(400, 300, 50, 150));
 	}
 	
 	public void paint(Graphics g) {
@@ -59,12 +55,11 @@ public class GameModel {
 			objects.get(i).paint(g);
 		}
 		
-		for(int i=0;i<objects.size();i++) {
-			for(int j=i+1;j<objects.size();j++) {
+		for(int i=0; i<objects.size(); i++) {
+			for(int j=i+1; j<objects.size(); j++) {
 				GameObject o1 = objects.get(i);
 				GameObject o2 = objects.get(j);
-				collider.collide(o1, o2);
-				collider2.collide(o1, o2);
+				chain.collide(o1, o2);
 			}
 		}
 	}
